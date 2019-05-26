@@ -1,11 +1,10 @@
 # StringBuilder
-/**
  * StringBuilder继承AbstractStringBuilder并实现了Serializable和CharSequence接口
  * AbstractStringBuilder类有两个成员变量：
  * byte[] value;  StringBuilder的存放值，区别于String类型使用final修饰，所以StringBuilder是可变的
  * int count;     数组的大小
  * CharSequence接口是String，StringBuilder和StringBuffer共有的接口，提供序列化字符基本的操作，包括length，charAt，codePoints，toString
- */
+
  
 ## 源码
     /**
