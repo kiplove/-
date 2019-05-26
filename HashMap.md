@@ -1,7 +1,6 @@
 # HashMap
 
-public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, Serializable {
-
+## 成员变量
     private static final long serialVersionUID = 362498820763181265L;
 
     /**
@@ -20,22 +19,56 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /**
-	 *  链表大于8则树化
+     *  链表大于8则树化
      */
     static final int TREEIFY_THRESHOLD = 8;
 
     /**
-	 * 树节点小于6时则链化
+     * 树节点小于6时则链化
      */
     static final int UNTREEIFY_THRESHOLD = 6;
 
     /**
-	 * 桶树大于64才会树化
+     * 桶树大于64才会树化
      */
     static final int MIN_TREEIFY_CAPACITY = 64;
+    
+    /* ---------------- Fields -------------- */
 
     /**
-	 * 节点，是一个链表结构
+     * 桶
+     */
+    transient Node<K,V>[] table;
+
+    /**
+     * 键值对的set
+     */
+    transient Set<Map.Entry<K,V>> entrySet;
+
+    /**
+     * map大小
+     */
+    transient int size;
+
+    /**
+	 * 修改计数，用于在并发场景的fast-fail
+     */
+    transient int modCount;
+
+    /**
+     * 当size大于threshold就要扩容
+     */
+    
+    int threshold;
+
+    /**
+	 * 桶大小的负载因子
+     */
+    final float loadFactor;
+    
+## 成员函数与内部类
+    /**
+     * 节点，是一个链表结构
      */
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
@@ -125,38 +158,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
         return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 
-    /* ---------------- Fields -------------- */
 
-    /**
-     * 桶
-     */
-    transient Node<K,V>[] table;
-
-    /**
-     * 键值对的set
-     */
-    transient Set<Map.Entry<K,V>> entrySet;
-
-    /**
-     * map大小
-     */
-    transient int size;
-
-    /**
-	 * 修改计数，用于在并发场景的fast-fail
-     */
-    transient int modCount;
-
-    /**
-     * 当size大于threshold就要扩容
-     */
-    
-    int threshold;
-
-    /**
-	 * 桶大小的负载因子
-     */
-    final float loadFactor;
 
     /* ---------------- Public operations -------------- */
 
@@ -202,7 +204,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 用map初始化
+     * 用map初始化
      */
     public HashMap(Map<? extends K, ? extends V> m) {
         this.loadFactor = DEFAULT_LOAD_FACTOR;
@@ -210,7 +212,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 *  先扩容再赋值,将map作为输入值
+     *  先扩容再赋值,将map作为输入值
      */
     final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
         int s = m.size();
@@ -233,14 +235,14 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * map的大小
+     * map的大小
      */
     public int size() {
         return size;
     }
 
     /**
-	 * 判空
+     * 判空
      */
     public boolean isEmpty() {
         return size == 0;
@@ -255,7 +257,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * get方法的在hash结构的实现
+     * get方法的在hash结构的实现
      */
     final Node<K,V> getNode(int hash, Object key) {
         Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
@@ -288,7 +290,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 新增
+     * 新增
      */
     public V put(K key, V value) {
         return putVal(hash(key), key, value, false, true);
@@ -435,7 +437,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 链表树化
+     * 链表树化
      */
     final void treeifyBin(Node<K,V>[] tab, int hash) {
         int n, index; Node<K,V> e;
@@ -525,7 +527,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 清空
+     * 清空
      */
     public void clear() {
         Node<K,V>[] tab;
@@ -538,7 +540,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 *遍历value值
+     *遍历value值
      */
     public boolean containsValue(Object value) {
         Node<K,V>[] tab; V v;
@@ -555,7 +557,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 *  KEY的集合
+     *  KEY的集合
      */
     public Set<K> keySet() {
         Set<K> ks = keySet;
@@ -594,7 +596,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * value集合
+     * value集合
      */
     public Collection<V> values() {
         Collection<V> vs = values;
@@ -630,7 +632,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 键值对集合
+     * 键值对集合
      */
     public Set<Map.Entry<K,V>> entrySet() {
         Set<Map.Entry<K,V>> es;
@@ -697,7 +699,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
         return removeNode(hash(key), key, value, true, true) != null;
     }
 
-	//值替换
+    //值替换
     @Override
     public boolean replace(K key, V oldValue, V newValue) {
         Node<K,V> e; V v;
@@ -710,7 +712,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
         return false;
     }
 
-	//value替换key对应的值
+   //value替换key对应的值
     @Override
     public V replace(K key, V value) {
         Node<K,V> e;
@@ -724,8 +726,8 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 不存在的key或value为null进行Function计算存在map
-	 */
+     * 不存在的key或value为null进行Function计算存在map
+     */
     @Override
     public V computeIfAbsent(K key,
                              Function<? super K, ? extends V> mappingFunction) {
@@ -790,7 +792,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 *  存在的key进行Function计算存在map,计算出来value为null删除key
+     *  存在的key进行Function计算存在map,计算出来value为null删除key
      */
     @Override
     public V computeIfPresent(K key,
@@ -818,7 +820,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 根据key，value计算值作为key的新value（无论原来存不存key），如果key存在且计算出来value值为空则删除key
+     * 根据key，value计算值作为key的新value（无论原来存不存key），如果key存在且计算出来value值为空则删除key
      */
     @Override
     public V compute(K key,
@@ -883,9 +885,9 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     }
 
     /**
-	 * 1.key存在旧值则，与给定值一起计算新值，新值为空则直接删除key
-	 * 2.key不存旧值，直接赋给定值为新值，新值为空则直接删除key
-	 * 3.key不存在，新增key
+     * 1.key存在旧值则，与给定值一起计算新值，新值为空则直接删除key
+     * 2.key不存旧值，直接赋给定值为新值，新值为空则直接删除key
+     * 3.key不存在，新增key
      */
     @Override
     public V merge(K key, V value,
@@ -1500,7 +1502,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     // Tree bins
 
     /**
-	 * 红黑树结构
+     * 红黑树结构（未细读）
      */
     static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
         TreeNode<K,V> parent;  // red-black tree links
