@@ -1,3 +1,4 @@
+# StringBuilder
 /**
  * StringBuilder继承AbstractStringBuilder并实现了Serializable和CharSequence接口
  * AbstractStringBuilder类有两个成员变量：
@@ -5,10 +6,8 @@
  * int count;     数组的大小
  * CharSequence接口是String，StringBuilder和StringBuffer共有的接口，提供序列化字符基本的操作，包括length，charAt，codePoints，toString
  */
-public final class StringBuilder
-    extends AbstractStringBuilder
-    implements java.io.Serializable, CharSequence
-{
+ 
+## 源码
     /**
      * 序列化
      */
@@ -351,4 +350,3 @@ public final class StringBuilder
         initBytes(val, 0, val.length);
     }
 
-}
