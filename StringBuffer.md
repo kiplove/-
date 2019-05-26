@@ -1,4 +1,4 @@
-#StringBuffer
+# StringBuffer
 
 /**
  * StringBuffer继承AbstractStringBuilder并实现了Serializable和CharSequence接口
