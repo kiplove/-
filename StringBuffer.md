@@ -1,17 +1,5 @@
 # StringBuffer
 
-/**
- * StringBuffer继承AbstractStringBuilder并实现了Serializable和CharSequence接口
- * AbstractStringBuilder类有两个成员变量：
- * byte[] value;  StringBuilder的存放值，区别于String类型使用final修饰，所以StringBuffer是可变的
- * int count;     数组的大小
- * CharSequence接口是String，StringBuilder和StringBuffer共有的接口，提供序列化字符基本的操作，包括length，charAt，codePoints，toString
- * StringBuffer基本每个方法都加synchronized，实现线程安全
- */
- public final class StringBuffer
-    extends AbstractStringBuilder
-    implements java.io.Serializable, CharSequence
-{
 
     /**
 	 *  缓存，字符串改变都会清零
