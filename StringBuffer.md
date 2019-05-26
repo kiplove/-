@@ -7,7 +7,7 @@
 	 3. CharSequence接口是String，StringBuilder和StringBuffer共有的接口，提供序列化字符基本的操作，包括length，charAt，codePoints，toString
 	 4. StringBuffer基本每个方法都加synchronized，实现线程安全
 	 
-    # 代码 
+    ## 代码 
     /**
 	 *  缓存，字符串改变都会清零
      */
