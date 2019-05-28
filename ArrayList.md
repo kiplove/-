@@ -1235,14 +1235,23 @@
         }
     }
 
-    // A tiny bit set implementation
-
+   	/**
+	 *	用一个long数组存bit位，long可以存64位，所以n/64就是需要的数组大小
+	 *  ((n - 1) >> 6) + 1 是为了但存在小于等于64时，可以有一个long元素
+	 */
     private static long[] nBits(int n) {
         return new long[((n - 1) >> 6) + 1];
     }
+	
+	/**
+	 * 置位，i为位数
+	 */
     private static void setBit(long[] bits, int i) {
         bits[i >> 6] |= 1L << i;
     }
+	/**
+	 * 检验空位，空位返回true，i为位数
+	 */
     private static boolean isClear(long[] bits, int i) {
         return (bits[i >> 6] & (1L << i)) == 0;
     }
@@ -1271,11 +1280,12 @@
         // elements to delete, a second pass to physically expunge.
         if (i < end) {
             final int beg = i;
+			//用bit位作为记录表，符合过滤条件置位
             final long[] deathRow = nBits(end - beg);
             deathRow[0] = 1L;   // set bit 0
             for (i = beg + 1; i < end; i++)
                 if (filter.test(elementAt(es, i)))
-                    setBit(deathRow, i - beg);
+                    setBit(deathRow, i - beg);     
             if (modCount != expectedModCount)
                 throw new ConcurrentModificationException();
             expectedModCount++;
@@ -1283,8 +1293,8 @@
             int w = beg;
             for (i = beg; i < end; i++)
                 if (isClear(deathRow, i - beg))
-                    es[w++] = es[i];
-            shiftTailOverGap(es, w, end);
+                    es[w++] = es[i];    //将不符合过滤条件的保存下来
+            shiftTailOverGap(es, w, end);  //将w到end位的元素擦除
             return true;
         } else {
             if (modCount != expectedModCount)
@@ -1292,7 +1302,6 @@
             return false;
         }
     }
-
 	/**
 	 * 将每一元素operator后替换旧值
 	 */
@@ -1313,7 +1322,7 @@
     @SuppressWarnings("unchecked")
 	
 	/**
-	 *	调用c方法排序
+	 * 调用c方法排序
 	 */
     public void sort(Comparator<? super E> c) {
         final int expectedModCount = modCount;
