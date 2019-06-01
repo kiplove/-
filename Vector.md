@@ -1,4 +1,6 @@
 # Vector
+*Vector与ArrayList实现基本差不多，不过方法基本添加了synchronized，支持并发
+
 
     /**
      *  数组
