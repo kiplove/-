@@ -48,7 +48,7 @@
     }
 
 	
-	## 数组容量操作
+   ## 数组容量操作
 
     /**
      * 将数组copy到vector
@@ -159,7 +159,7 @@
         return elementCount == 0;
     }
 
-	//数组增删改查
+   ## 数组增删改查
 	
     /**
      * 获取数组的枚举类型，用于数组元素的循环获取，返回枚举类
@@ -467,7 +467,7 @@
         return oldValue;
     }
 
-    ## 块操作
+   ## 块操作
 
     /**
      * 数组包含校验
@@ -686,7 +686,7 @@
         fields.put("elementData", data);
         s.writeFields();
     }
-    ## 迭代器
+   ## 迭代器
     /**
      * Returns a list iterator over the elements in this list (in proper
      * sequence), starting at the specified position in the list.
@@ -845,7 +845,7 @@
         }
     }
 
-    ## 参数函数化
+   ## 参数函数化
     /**
      * 每个元素执行action
      */
@@ -887,7 +887,7 @@
         modCount++;
     }
     
-    ## spliterator
+   ## spliterator
     /**
      * Creates a <em><a href="Spliterator.html#binding">late-binding</a></em>
      * and <em>fail-fast</em> {@link Spliterator} over the elements in this
