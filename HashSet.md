@@ -1,6 +1,6 @@
 # HashSet
 
-* 采用适配器模式，封装了HashMap
+    *采用适配器模式，封装了HashMap
 
     static final long serialVersionUID = -5024744406713321676L;
 
