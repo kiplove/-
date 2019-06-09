@@ -426,10 +426,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public Map.Entry<K,V> lowerEntry(K key) {
@@ -437,10 +433,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public K lowerKey(K key) {
@@ -448,10 +440,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public Map.Entry<K,V> floorEntry(K key) {
@@ -459,10 +447,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public K floorKey(K key) {
@@ -470,10 +454,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public Map.Entry<K,V> ceilingEntry(K key) {
@@ -481,10 +461,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public K ceilingKey(K key) {
@@ -492,10 +468,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public Map.Entry<K,V> higherEntry(K key) {
@@ -503,10 +475,6 @@
     }
 
     /**
-     * @throws ClassCastException {@inheritDoc}
-     * @throws NullPointerException if the specified key is null
-     *         and this map uses natural ordering, or its comparator
-     *         does not permit null keys
      * @since 1.6
      */
     public K higherKey(K key) {
@@ -522,31 +490,6 @@
     private transient KeySet<K> navigableKeySet;
     private transient NavigableMap<K,V> descendingMap;
 
-    /**
-     * Returns a {@link Set} view of the keys contained in this map.
-     *
-     * <p>The set's iterator returns the keys in ascending order.
-     * The set's spliterator is
-     * <em><a href="Spliterator.html#binding">late-binding</a></em>,
-     * <em>fail-fast</em>, and additionally reports {@link Spliterator#SORTED}
-     * and {@link Spliterator#ORDERED} with an encounter order that is ascending
-     * key order.  The spliterator's comparator (see
-     * {@link java.util.Spliterator#getComparator()}) is {@code null} if
-     * the tree map's comparator (see {@link #comparator()}) is {@code null}.
-     * Otherwise, the spliterator's comparator is the same as or imposes the
-     * same total ordering as the tree map's comparator.
-     *
-     * <p>The set is backed by the map, so changes to the map are
-     * reflected in the set, and vice-versa.  If the map is modified
-     * while an iteration over the set is in progress (except through
-     * the iterator's own {@code remove} operation), the results of
-     * the iteration are undefined.  The set supports element removal,
-     * which removes the corresponding mapping from the map, via the
-     * {@code Iterator.remove}, {@code Set.remove},
-     * {@code removeAll}, {@code retainAll}, and {@code clear}
-     * operations.  It does not support the {@code add} or {@code addAll}
-     * operations.
-     */
     public Set<K> keySet() {
         return navigableKeySet();
     }
@@ -565,28 +508,7 @@
     public NavigableSet<K> descendingKeySet() {
         return descendingMap().navigableKeySet();
     }
-
-    /**
-     * Returns a {@link Collection} view of the values contained in this map.
-     *
-     * <p>The collection's iterator returns the values in ascending order
-     * of the corresponding keys. The collection's spliterator is
-     * <em><a href="Spliterator.html#binding">late-binding</a></em>,
-     * <em>fail-fast</em>, and additionally reports {@link Spliterator#ORDERED}
-     * with an encounter order that is ascending order of the corresponding
-     * keys.
-     *
-     * <p>The collection is backed by the map, so changes to the map are
-     * reflected in the collection, and vice-versa.  If the map is
-     * modified while an iteration over the collection is in progress
-     * (except through the iterator's own {@code remove} operation),
-     * the results of the iteration are undefined.  The collection
-     * supports element removal, which removes the corresponding
-     * mapping from the map, via the {@code Iterator.remove},
-     * {@code Collection.remove}, {@code removeAll},
-     * {@code retainAll} and {@code clear} operations.  It does not
-     * support the {@code add} or {@code addAll} operations.
-     */
+    
     public Collection<V> values() {
         Collection<V> vs = values;
         if (vs == null) {
@@ -780,14 +702,6 @@
             return new EntrySpliterator<>(TreeMap.this, null, null, 0, -1, 0);
         }
     }
-
-    /*
-     * Unlike Values and EntrySet, the KeySet class is static,
-     * delegating to a NavigableMap to allow use by SubMaps, which
-     * outweighs the ugliness of needing type-tests for the following
-     * Iterator methods that are defined appropriately in main versus
-     * submap classes.
-     */
 
     Iterator<K> keyIterator() {
         return new KeyIterator(getFirstEntry());
@@ -1026,19 +940,8 @@
     abstract static class NavigableSubMap<K,V> extends AbstractMap<K,V>
         implements NavigableMap<K,V>, java.io.Serializable {
         private static final long serialVersionUID = -2102997345730753016L;
-        /**
-         * The backing map.
-         */
         final TreeMap<K,V> m;
 
-        /**
-         * Endpoints are represented as triples (fromStart, lo,
-         * loInclusive) and (toEnd, hi, hiInclusive). If fromStart is
-         * true, then the low (absolute) bound is the start of the
-         * backing map, and the other values are ignored. Otherwise,
-         * if loInclusive is true, lo is the inclusive bound, else lo
-         * is the exclusive bound. Similarly for the upper bound.
-         */
         final K lo, hi;
         final boolean fromStart, toEnd;
         final boolean loInclusive, hiInclusive;
@@ -2133,18 +2036,6 @@
 
     private static final long serialVersionUID = 919286545866124006L;
 
-    /**
-     * Save the state of the {@code TreeMap} instance to a stream (i.e.,
-     * serialize it).
-     *
-     * @serialData The <em>size</em> of the TreeMap (the number of key-value
-     *             mappings) is emitted (int), followed by the key (Object)
-     *             and value (Object) for each key-value mapping represented
-     *             by the TreeMap. The key-value mappings are emitted in
-     *             key-order (as determined by the TreeMap's Comparator,
-     *             or by the keys' natural ordering if the TreeMap has no
-     *             Comparator).
-     */
     private void writeObject(java.io.ObjectOutputStream s)
         throws java.io.IOException {
         // Write out the Comparator and any hidden stuff
@@ -2189,37 +2080,6 @@
         }
     }
 
-
-    /**
-     * Linear time tree building algorithm from sorted data.  Can accept keys
-     * and/or values from iterator or stream. This leads to too many
-     * parameters, but seems better than alternatives.  The four formats
-     * that this method accepts are:
-     *
-     *    1) An iterator of Map.Entries.  (it != null, defaultVal == null).
-     *    2) An iterator of keys.         (it != null, defaultVal != null).
-     *    3) A stream of alternating serialized keys and values.
-     *                                   (it == null, defaultVal == null).
-     *    4) A stream of serialized keys. (it == null, defaultVal != null).
-     *
-     * It is assumed that the comparator of the TreeMap is already set prior
-     * to calling this method.
-     *
-     * @param size the number of keys (or key-value pairs) to be read from
-     *        the iterator or stream
-     * @param it If non-null, new entries are created from entries
-     *        or keys read from this iterator.
-     * @param str If non-null, new entries are created from keys and
-     *        possibly values read from this stream in serialized form.
-     *        Exactly one of it and str should be non-null.
-     * @param defaultVal if non-null, this default value is used for
-     *        each value in the map.  If null, each value is read from
-     *        iterator or stream, as described above.
-     * @throws java.io.IOException propagated from stream reads. This cannot
-     *         occur if str is null.
-     * @throws ClassNotFoundException propagated from readObject.
-     *         This cannot occur if str is null.
-     */
     private void buildFromSorted(int size, Iterator<?> it,
                                  java.io.ObjectInputStream str,
                                  V defaultVal)
