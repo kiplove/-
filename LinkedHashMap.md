@@ -1,6 +1,6 @@
 ## LinkedHashMap
-*默认情况，遍历时的顺序是按照插入节点的顺序
-*传入accessOrder参数为true，使得其遍历顺序按照访问的顺序输出
+* 默认情况，遍历时的顺序是按照插入节点的顺序
+* 传入accessOrder参数为true，使得其遍历顺序按照访问的顺序输出
     
     /**
      * HashMap.Node subclass for normal LinkedHashMap entries.
