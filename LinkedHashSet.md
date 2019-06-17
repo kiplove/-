@@ -1,8 +1,8 @@
 
 # LinkedHashSet
-1. 底层实现是LinkedHashMap
-2. 承HashSet的方法调用的是LinkedHashMap
-2. accessOrder=false 按插入节点的顺序
+ 1. 底层实现是LinkedHashMap
+ 2. 承HashSet的方法调用的是LinkedHashMap
+ 2. accessOrder=false 按插入节点的顺序
 
     private static final long serialVersionUID = -2851667679971038690L;
 
